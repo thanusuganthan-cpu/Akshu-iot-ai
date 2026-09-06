@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="neonEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background rounded rectangle -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="106" fill="none" stroke="#1e293b" stroke-width="4" />
+
+  <!-- Outer IoT concentric network rings -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#1e293b" stroke-width="2" stroke-dasharray="8 12" />
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#0e7490" stroke-width="3" opacity="0.4" />
+
+  <!-- Microcontroller Chip Base -->
+  <rect x="180" y="180" width="152" height="152" rx="28" fill="#0f172a" stroke="url(#neonCyan)" stroke-width="5" filter="url(#glow)" />
+
+  <!-- Chip connector pins -->
+  <g stroke="#38bdf8" stroke-width="4" stroke-linecap="round">
+    <!-- Top pins -->
+    <line x1="216" y1="180" x2="216" y2="152" />
+    <line x1="256" y1="180" x2="256" y2="144" />
+    <line x1="296" y1="180" x2="296" y2="152" />
+    <!-- Bottom pins -->
+    <line x1="216" y1="332" x2="216" y2="360" />
+    <line x1="256" y1="332" x2="256" y2="368" />
+    <line x1="296" y1="332" x2="296" y2="360" />
+    <!-- Left pins -->
+    <line x1="180" y1="216" x2="152" y2="216" />
+    <line x1="180" y1="256" x2="144" y2="256" />
+    <line x1="180" y1="296" x2="152" y2="296" />
+    <!-- Right pins -->
+    <line x1="332" y1="216" x2="360" y2="216" />
+    <line x1="332" y1="256" x2="368" y2="256" />
+    <line x1="332" y1="296" x2="360" y2="296" />
+  </g>
+
+  <!-- Central AI Nucleus / IoT Node -->
+  <circle cx="256" cy="256" r="36" fill="url(#neonEmerald)" filter="url(#glow)" />
+  <polygon points="256,236 273,266 239,266" fill="#ffffff" opacity="0.9" />
+
+  <!-- Radiating IoT sensor telemetry waves -->
+  <path d="M 120 160 A 180 180 0 0 1 392 160" fill="none" stroke="#06b6d4" stroke-width="6" stroke-linecap="round" opacity="0.75" />
+  <path d="M 150 190 A 130 130 0 0 1 362 190" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" opacity="0.85" />
+  
+  <!-- Corner Sensor Node Indicators -->
+  <circle cx="120" cy="160" r="8" fill="#06b6d4" />
+  <circle cx="392" cy="160" r="8" fill="#3b82f6" />
+  <circle cx="120" cy="352" r="8" fill="#10b981" />
+  <circle cx="392" cy="352" r="8" fill="#8b5cf6" />
+
+  <!-- Interconnect traces -->
+  <path d="M 120 352 L 180 296" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="4 6" />
+  <path d="M 392 352 L 332 296" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="4 6" />
+</svg>

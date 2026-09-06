@@ -1,0 +1,6 @@
+{
+  "name": "AKSHU IoT AI",
+  "description": "Next-generation AI & IoT platform to connect, monitor, understand, and control ESP32 hardware, sensors, cameras, and automations.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

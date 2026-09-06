@@ -1,0 +1,185 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile and global IoT preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "tempUnit": { "type": "string", "enum": ["celsius", "fahrenheit"] },
+        "systemUnits": { "type": "string", "enum": ["metric", "imperial"] },
+        "theme": { "type": "string", "enum": ["dark", "light", "system"] },
+        "demoMode": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Device": {
+      "title": "Device",
+      "description": "An authenticated IoT hardware microcontroller (ESP32, ESP8266, etc).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "enum": ["ESP32", "ESP32-CAM", "ESP32-S3", "ESP8266", "CUSTOM"] },
+        "status": { "type": "string", "enum": ["online", "offline", "connecting", "error"] },
+        "deviceKey": { "type": "string", "maxLength": 128 },
+        "ipAddress": { "type": "string", "maxLength": 64 },
+        "firmwareVersion": { "type": "string", "maxLength": 32 },
+        "wifiRssi": { "type": "number" },
+        "battery": { "type": "number" },
+        "capabilities": { "type": "string", "maxLength": 256 },
+        "isDemo": { "type": "boolean" },
+        "lastSeen": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "type", "status"]
+    },
+    "Sensor": {
+      "title": "Sensor",
+      "description": "A connected physical or environmental sensor attached to a device.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "maxLength": 64 },
+        "unit": { "type": "string", "maxLength": 32 },
+        "currentValue": { "type": "number" },
+        "minRange": { "type": "number" },
+        "maxRange": { "type": "number" },
+        "calibrationOffset": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "warning", "critical", "offline"] },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["id", "deviceId", "userId", "name", "type", "unit"]
+    },
+    "Telemetry": {
+      "title": "Telemetry",
+      "description": "A time-stamped telemetry data point emitted by an IoT microcontroller.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string" },
+        "temperature": { "type": "number" },
+        "humidity": { "type": "number" },
+        "airQuality": { "type": "number" },
+        "battery": { "type": "number" },
+        "raw": { "type": "string", "maxLength": 1024 }
+      },
+      "required": ["id", "deviceId", "userId", "timestamp"]
+    },
+    "AlertRule": {
+      "title": "AlertRule",
+      "description": "User-configured threshold rule for sending warning/critical notifications.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "sensorType": { "type": "string", "maxLength": 64 },
+        "operator": { "type": "string", "enum": [">", "<", ">=", "<=", "==", "!="] },
+        "threshold": { "type": "number" },
+        "severity": { "type": "string", "enum": ["info", "warning", "critical"] },
+        "message": { "type": "string", "maxLength": 256 },
+        "enabled": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "deviceId", "sensorType", "operator", "threshold", "severity"]
+    },
+    "Automation": {
+      "title": "Automation",
+      "description": "Automated trigger-action rule linking sensor states to actuator controls.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "conditionDeviceId": { "type": "string", "maxLength": 128 },
+        "conditionSensorType": { "type": "string", "maxLength": 64 },
+        "operator": { "type": "string", "enum": [">", "<", ">=", "<=", "==", "!="] },
+        "threshold": { "type": "number" },
+        "targetDeviceId": { "type": "string", "maxLength": 128 },
+        "actionType": { "type": "string", "enum": ["digital_write", "pwm", "relay_toggle", "fan_control", "light_control", "buzzer"] },
+        "actionValue": { "type": "number" },
+        "enabled": { "type": "boolean" },
+        "lastTriggered": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "conditionDeviceId", "targetDeviceId", "actionType"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "In-app alert notification message generated for the user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 128 },
+        "message": { "type": "string", "maxLength": 512 },
+        "severity": { "type": "string", "enum": ["info", "warning", "critical"] },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "severity", "read", "timestamp"]
+    },
+    "CameraConfig": {
+      "title": "CameraConfig",
+      "description": "ESP32-CAM or IP Camera stream endpoints and security credentials.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "streamUrl": { "type": "string", "maxLength": 512 },
+        "snapshotUrl": { "type": "string", "maxLength": 512 },
+        "status": { "type": "string", "enum": ["online", "offline", "connecting", "unconfigured"] },
+        "resolution": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["id", "userId", "name"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile settings"
+    },
+    "/users/{userId}/devices/{deviceId}": {
+      "schema": "Device",
+      "description": "Microcontroller device registry"
+    },
+    "/users/{userId}/devices/{deviceId}/sensors/{sensorId}": {
+      "schema": "Sensor",
+      "description": "Individual sensor channels on a device"
+    },
+    "/users/{userId}/devices/{deviceId}/telemetry/{telemetryId}": {
+      "schema": "Telemetry",
+      "description": "Historical telemetry points"
+    },
+    "/users/{userId}/alerts/{alertId}": {
+      "schema": "AlertRule",
+      "description": "Configured alert thresholds"
+    },
+    "/users/{userId}/automations/{automationId}": {
+      "schema": "Automation",
+      "description": "Configured automations"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": "NotificationItem",
+      "description": "User system notifications"
+    },
+    "/users/{userId}/cameras/{cameraId}": {
+      "schema": "CameraConfig",
+      "description": "User camera configurations"
+    }
+  }
+}
